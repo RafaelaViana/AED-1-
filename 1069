@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int contarDiamantes(char *str) {
+    int count = 0;
+    int i = 0;
+    
+    while (str[i] != '\0') {
+        if (str[i] == '<') {
+            for (int j = i + 1; str[j] != '\0'; j++) {
+                if (str[j] == '>') {
+                    count++;  // Um diamante foi encontrado
+                    str[i] = '.';  // Marca o '<' como processado
+                    str[j] = '.';  // Marca o '>' como processado
+                    break;  // Só podemos contar um diamante por vez
+                }
+            }
+        }
+        i++;
+    }
+    return count;
+}
+
+int main() {
+    int N;
+    scanf("%d", &N);
+    getchar(); // Para consumir a nova linha após o número de casos
+
+    for (int i = 0; i < N; i++) {
+        char linha[1001];  // Máximo de 1000 caracteres + '\0'
+        fgets(linha, 1001, stdin);
+
+        // Remover o '\n' da string, se existir
+        linha[strcspn(linha, "\n")] = '\0';
+
+        int resultado = contarDiamantes(linha);
+        printf("%d\n", resultado);
+    }
+
+    return 0;
+}
